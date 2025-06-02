@@ -1,10 +1,14 @@
+# Start from official n8n image
 FROM n8nio/n8n
 
-# Switch to root to install ffmpeg
+# Switch to root for package install
 USER root
 
-# Update package list and install ffmpeg
-RUN apt-get update && apt-get install -y ffmpeg
+# Install ffmpeg (Alpine-based)
+RUN apk add --no-cache ffmpeg
 
-# Switch back to the node user
+# OPTIONAL: Fix file permissions warning
+ENV N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=false
+
+# Switch back to node to run the app safely
 USER node
