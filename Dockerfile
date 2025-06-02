@@ -1,11 +1,11 @@
-# Use the official n8n image (Alpine-based)
+# Start from official Alpine-based n8n image
 FROM n8nio/n8n:latest
 
-# Switch to root user to install packages
+# Switch to root to install packages
 USER root
 
 # Install ffmpeg via Alpine package manager
-RUN apk add --no-cache ffmpeg
+RUN apk update && apk add --no-cache ffmpeg
 
-# Switch back to node user
+# Switch back to default n8n user
 USER node
