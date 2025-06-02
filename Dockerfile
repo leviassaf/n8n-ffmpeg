@@ -1,10 +1,20 @@
-FROM n8nio/n8n
+FROM node:20-bullseye
 
-# Switch to root before package installation
-USER root
+# Install ffmpeg
+RUN apt-get update && apt-get install -y ffmpeg
 
-# Install ffmpeg as root using Alpine's package manager
-RUN apk add --no-cache ffmpeg
+# Install n8n
+RUN npm install -g n8n
 
-# Return to default non-root user for safety
+# Set working directory
+WORKDIR /home/node
+
+# Create a user to run n8n as non-root
+RUN useradd -m -s /bin/bash node
 USER node
+
+# Expose port
+EXPOSE 5678
+
+# Start n8n
+CMD ["n8n"]
