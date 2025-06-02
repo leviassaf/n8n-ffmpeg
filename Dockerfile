@@ -1,10 +1,10 @@
 FROM n8nio/n8n
 
-# Switch to root before installing packages
+# Switch to root before package installation
 USER root
 
-# Install ffmpeg using Alpine's apk
+# Install ffmpeg as root using Alpine's package manager
 RUN apk add --no-cache ffmpeg
 
-# Switch back to default non-root user for security
+# Return to default non-root user for safety
 USER node
