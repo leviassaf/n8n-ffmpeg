@@ -1,19 +1,14 @@
-FROM node:20-bullseye
+# Start from official n8n image
+FROM n8nio/n8n
 
-# Install ffmpeg
-RUN apt-get update && apt-get install -y ffmpeg
+# Switch to root for package install
+USER root
 
-# Install n8n globally via npm
-RUN npm install -g n8n
+# Install ffmpeg (Alpine-based)
+RUN apk add --no-cache ffmpeg
 
-# Set working directory
-WORKDIR /home/node
+# OPTIONAL: Fix file permissions warning
+ENV N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=false
 
-# Use the existing 'node' user from the image
+# Switch back to node to run the app safely
 USER node
-
-# Expose n8n port
-EXPOSE 5678
-
-# Start n8n
-CMD ["n8n"]
